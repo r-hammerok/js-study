@@ -1,0 +1,1 @@
+Add new string in file3
