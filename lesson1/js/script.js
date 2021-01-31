@@ -1,9 +1,9 @@
-let money;
-let income;
-let addExpenses;
-let deposit;
-let mission;
-let period;
+let money, 
+income,
+addExpenses,
+deposit,
+mission,
+period;
 
 alert('Мой первый код!');
 
