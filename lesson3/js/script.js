@@ -6,36 +6,29 @@ const
   dayEn = ['monday','tuesday','wednesday','thursday',
               'friday','saturday','sunday'];
 
+let dayRuEn = new Map();
+            
+
 console.log('Используя if');
 if (lang === 'ru') {
-  for (let i = 0; i < dayRu.length; i++) {
-    console.log(dayRu[i]);
-  }
+    console.log(dayRu);
 } else {
-  for (let i = 0; i < dayEn.length; i++) {
-    console.log(dayEn[i]);
-  }
+    console.log(dayEn);
 }
 
 console.log('Используя switch');
 switch (lang) {
   case 'ru':
-    for (let i = 0; i < dayRu.length; i++) {
-      console.log(dayRu[i]);
-    }
+    console.log(dayRu);
     break;
   default:
-    for (let i = 0; i < dayEn.length; i++) {
-      console.log(dayEn[i]);
-    }
+    console.log(dayEn);
 }
 
-const dayRuEn = [dayRu, dayEn];
-const index = lang === 'ru' ? 0 : 1;
+dayRuEn.set('ru', dayRu);
+dayRuEn.set('en', dayEn);
 console.log('Используя многомерный массив');
-for (let i = 0; i < dayRuEn[index].length; i++) {
-  console.log(dayRuEn[index][i]);
-}
+console.log(dayRuEn.get(lang));
 
 const namePerson = 'Роман';
 console.log(namePerson === 'Артем' ? 'директор' : 
