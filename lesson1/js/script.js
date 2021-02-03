@@ -3,34 +3,18 @@
 const 
   income = 'биржа',
   mission = 100000,
-  period = 12;
-
-const money = +prompt('Ваш месячный доход?');
-const addExpenses = prompt('Перечислите возможные расходы ' +
-   'за рассчитываемый период через запятую');
-const deposit = !!(prompt('Есть ли у вас депозит в банке?'));
-
-const expenses1 = prompt('Введите обязательную статью расходов №1?');
-const amount1 = +prompt('Во сколько это обойдется?');
-const expenses2 = prompt('Введите обязательную статью расходов №2?');
-const amount2 = +prompt('Во сколько это обойдется?');
+  period = 12,
+  money = +prompt('Ваш месячный доход?'),
+  addExpenses = prompt('Перечислите возможные расходы ' +
+   'за рассчитываемый период через запятую'),
+  deposit = !!(prompt('Есть ли у вас депозит в банке?')),
+  expenses1 = prompt('Введите обязательную статью расходов №1?'),
+  amount1 = +prompt('Во сколько это обойдется?'),
+  expenses2 = prompt('Введите обязательную статью расходов №2?'),
+  amount2 = +prompt('Во сколько это обойдется?');
 
 function showTypeOf(data) {
   return typeof data;
-}
-
-function getExpensesMonth() {
-  return amount1 + amount2;
-}
-
-function getAccumulatedMonth() {
-  return money - getExpensesMonth();
-}
-
-const accumulatedMonth = getAccumulatedMonth();
-
-function getTargetMonth() {
-  return Math.ceil(mission / accumulatedMonth);
 }
 
 function getStatusIncome(incomeDay) {
@@ -45,7 +29,21 @@ function getStatusIncome(incomeDay) {
   }
 }
 
-const budgetDay = Math.floor(accumulatedMonth / 30);
+function getExpensesMonth() {
+  return amount1 + amount2;
+}
+
+function getAccumulatedMonth() {
+  return money - getExpensesMonth();
+}
+
+const
+  accumulatedMonth = getAccumulatedMonth(),
+  budgetDay = Math.floor(accumulatedMonth / 30);
+
+function getTargetMonth() {
+  return Math.ceil(mission / accumulatedMonth);
+}
 
 console.log(showTypeOf(money), showTypeOf(income), showTypeOf(deposit));
 console.log('Расходы за месяц: ', getExpensesMonth());
