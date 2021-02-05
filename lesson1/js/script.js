@@ -1,6 +1,6 @@
 'use strict';
 
-let isNumber = function(n) {
+const isNumber = function(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
@@ -10,11 +10,12 @@ const
   period = 12,
   addExpenses = prompt('Перечислите возможные расходы ' +
    'за рассчитываемый период через запятую', 'кафе, кино, цветы'),
-  deposit = !!(prompt('Есть ли у вас депозит в банке?', 'нет'));
+  // deposit = !!(prompt('Есть ли у вас депозит в банке?', 'нет'));
+  deposit = confirm('Есть ли у вас депозит в банке?');
 
 let money;
 
-let start = function() {
+const start = function() {
   do {
     money = prompt('Ваш месячный доход?');
   } while (!isNumber(money));
@@ -40,7 +41,7 @@ function getStatusIncome(incomeDay) {
 
 let expenses = [];
 
-let getExpensesMonth = function () {
+const getExpensesMonth = function () {
   let
     sum = 0,
     amount;
@@ -56,7 +57,7 @@ let getExpensesMonth = function () {
   return sum;
 };
 
-let expensesAmount = getExpensesMonth();
+const expensesAmount = getExpensesMonth();
 
 function getAccumulatedMonth() {
   return money - expensesAmount;
