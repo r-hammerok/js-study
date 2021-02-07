@@ -3,7 +3,7 @@ const mainStr = 'sssssssssssssssssssssssssssssss';
 
 const modifyString = function(str) {
     if (typeof str !== 'string') {
-        return false;
+        return 'Передана НЕ строка!';
     }
     str = str.trim();
     if (str.length > 30) {
@@ -12,10 +12,4 @@ const modifyString = function(str) {
     return str;
 };
 
-const modStr = modifyString(mainStr);
-
-if (!modStr) {
-    console.log('Передана НЕ строка!');
-} else {
-    console.log(modStr);
-}
+console.log(modifyString(mainStr));
