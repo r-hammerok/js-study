@@ -4,11 +4,22 @@ const isNumber = function(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 };
 
+const isText = function(t) {
+  if (typeof t === 'string') {
+    t = t.trim();
+  }
+  return t && !isNumber(t);
+}
+
 let money,
     appData = {
+      income: {},
+      addIncome: [],
       expenses: {},
       addExpenses: [],
       deposit: false,
+      percentDeposit: 0,
+      moneyDeposit: 0,
       mission: 10000,
       period: 12,
       budget: 0,
@@ -16,9 +27,26 @@ let money,
       budgetMonth: 0,
       expensesMonth: 0,
       asking: function() {
+
+        if (confirm('Есть ли у вас дополнительный источник заработок?')) {
+          let itemIncome, cashIncome;
+          do {
+            itemIncome = prompt('Какой у вас дополнительный заработок?', 'Таксую');
+          } while (!isText(itemIncome));
+          do {
+            cashIncome = prompt('Сколько вы на этом зарабатываете?','10000');
+          } while (!isNumber(cashIncome));
+          appData.income[itemIncome.trim()] = +cashIncome;
+        }
+
         let addExpenses = prompt('Перечислите возможные расходы за' + 
                 'рассчитываемый период через запятую', 'кафе, кино, цветы');
         appData.addExpenses = addExpenses.toLowerCase().split(',');
+        for (let i = 0; i < appData.addExpenses.length; i++) {
+          let item = appData.addExpenses[i].trim();
+          item = item.charAt(0).toUpperCase() + item.slice(1);
+          appData.addExpenses[i] = item;
+        }
         appData.deposit = confirm('Есть ли у вас депозит в банке?');
 
         let
@@ -26,13 +54,18 @@ let money,
           expense;
 
         for (let i = 0; i < 2; i++) {
-          expense = prompt('Введите обязательную статью расходов №' + (i+1));
           do {
-            amount = prompt('Во сколько обойдется статья №' + (i+1) + '?');
+            expense = prompt(`Введите обязательную статью расходов № ${i+1}`, `Статья ${i+1}`);
+          } while (!isText(expense));
+          do {
+            amount = prompt(`Во сколько обойдется статья № ${i+1}?`, `${(i+1)*1000}`);
           } while (!isNumber(amount));
 
-          appData.expenses[expense] = +amount;
+          appData.expenses[expense.trim()] = +amount;
         }
+
+        appData.getInfoDeposit();
+
       },
       getExpensesMonth: function () {
         appData.expensesMonth = 0;
@@ -57,12 +90,28 @@ let money,
         } else {
           return 'Что то пошло не так';
         }
+      },
+      getInfoDeposit: function () {
+        if (appData.deposit) {
+          let percentDeposit, moneyDeposit;
+          do {
+            percentDeposit = prompt('Какой годовой процент?','10');
+          } while (!isNumber(percentDeposit) || percentDeposit <= 0);
+          appData.percentDeposit = +percentDeposit;
+          do {
+            moneyDeposit = prompt('Какая сумма заложена?','10000');
+          } while (!isNumber(moneyDeposit) || moneyDeposit <= 0);
+          appData.moneyDeposit = +moneyDeposit;
+        }
+      },
+      calcSavedMoney: function () {
+        return appData.budgetMonth * appData.period;
       }
   };
 
 const start = function() {
   do {
-    money = prompt('Ваш месячный доход?');
+    money = prompt('Ваш месячный доход?', '10000');
   } while (!isNumber(money));
 };
 
@@ -74,6 +123,7 @@ appData.getExpensesMonth();
 appData.getBudget();
 
 console.log('Расходы за месяц: ', appData.expensesMonth);
+console.log('Возможные расходы за месяц: ', appData.addExpenses.join(', '));
 
 if (appData.getTargetMonth() >= 0) {
   console.log('Срок достижения цели: ', appData.getTargetMonth());
