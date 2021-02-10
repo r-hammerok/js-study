@@ -149,7 +149,19 @@ const btnAddExpenses = document.getElementsByTagName('button')[1];
 
 const checkDeposit = document.querySelector('#deposit-check');
 
-const additionalIncome1 = document.querySelector('input.additional_income-item')[0];
-const additionalIncome2 = document.querySelector('input.additional_income-item')[1];
+const additionalIncome1 = document.querySelectorAll('input.additional_income-item')[0];
+const additionalIncome2 = document.querySelectorAll('input.additional_income-item')[1];
 
+let elements = document.querySelectorAll('.result [class*="-value"]');
+let resultFields = [];
+elements.forEach(function(item, i) {
+  resultFields[i] = item;
+});
 
+elements = document.querySelectorAll('.data input');
+let otherFields = [];
+elements.forEach(function(item, i) {
+  if (!item.classList.contains('additional_income-item') && item.id !== 'deposit-check') {
+    otherFields[i] = item;
+  }
+});
