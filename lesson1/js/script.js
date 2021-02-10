@@ -115,6 +115,8 @@ const start = function() {
   } while (!isNumber(money));
 };
 
+/*
+
 start();
 
 appData.budget = money;
@@ -137,3 +139,17 @@ console.log('Наша программа включает в себя данны
 for (let key in appData) {
   console.log(key, appData[key]);
 }
+
+*/
+
+const btnStart = document.getElementById('start');
+
+const btnAddIncome = document.getElementsByTagName('button')[0];
+const btnAddExpenses = document.getElementsByTagName('button')[1];
+
+const checkDeposit = document.querySelector('#deposit-check');
+
+const additionalIncome1 = document.querySelector('input.additional_income-item')[0];
+const additionalIncome2 = document.querySelector('input.additional_income-item')[1];
+
+
