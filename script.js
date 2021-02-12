@@ -1,6 +1,6 @@
 'use strict';
 
-let 
+const 
     books = document.querySelectorAll('.book'),
     parentBooks = document.querySelector('aside.books');
 
