@@ -32,7 +32,8 @@ const
   depositAmount = document.querySelector('input.deposit-amount'),
   depositPercent = document.querySelector('input.deposit-percent'),
   targetAmount = document.querySelector('input.target-amount'),
-  periodSelect = document.querySelector('input.period-select');
+  periodSelect = document.querySelector('input.period-select'),
+  allInputs = document.querySelectorAll('input');
 
 let 
   expensesItems = document.querySelectorAll('.expenses-items'),
@@ -69,6 +70,18 @@ let
           btnStart.setAttribute('disabled', 'true');
         }
       },
+      onlyText: function(e) {
+        if (e.charCode !== 32 && e.charCode !== 44 && e.charCode !== 46 && 
+              e.charCode !== 1025 && e.charCode !== 1105 && 
+                 (e.charCode < 1040 || e.charCode > 1103)) {
+          e.preventDefault();
+        }
+      },
+      onlyNumber: function(e) {
+        if (e.charCode < 48 || e.charCode > 57 ) {
+          e.preventDefault();
+        }
+      },
       showResult: function() {
         periodSelect.addEventListener('change', function() 
         {
@@ -85,6 +98,8 @@ let
       },
       addExpensesBlock: function() {
         let cloneExpensesItem = expensesItems[0].cloneNode(true);
+        cloneExpensesItem.querySelector('.expenses-title').value = '';
+        cloneExpensesItem.querySelector('.expenses-amount').value = '';
         expensesItems[0].parentNode.insertBefore(cloneExpensesItem, btnAddExpenses);
         expensesItems = document.querySelectorAll('.expenses-items');
         if (expensesItems.length === 3) {
@@ -104,6 +119,8 @@ let
       },
       addIncomeBlock: function() {
         const cloneIncomeItem = incomeItems[0].cloneNode(true);
+        cloneIncomeItem.querySelector('.income-title').value = '';
+        cloneIncomeItem.querySelector('.income-amount').value = '';
         btnAddIncome.insertAdjacentElement('beforeBegin', cloneIncomeItem);
         incomeItems = document.querySelectorAll('.income-items');
         if (incomeItems.length === 3) {
@@ -182,6 +199,15 @@ let
         return appData.budgetMonth * periodSelect.value;
       }
   };
+
+  allInputs.forEach(function(item) {
+    if (item.getAttribute('placeholder') === 'Наименование') {
+      item.addEventListener('keypress', appData.onlyText);
+    }
+    if (item.getAttribute('placeholder') === 'Сумма') {
+      item.addEventListener('keypress', appData.onlyNumber);
+    }
+  });
 
   btnStart.addEventListener('click', appData.start);
 
