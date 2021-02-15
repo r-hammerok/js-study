@@ -14,51 +14,44 @@ const
             return textForms[1];
         }
         return textForms[2];
+    },
+    capitalizeFirstLetter = function(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
     };
 
 const 
-    monthRu = [
-        'января',
-        'февраля',
-        'марта',
-        'апреля',
-        'мая',
-        'июня',
-        'июля',
-        'августа',
-        'сентября',
-        'октября',
-        'ноября',
-        'декабря'
-    ],
-    dayRu = [
-        'Воскресенье',
-        'Понедельник',
-        'Вторник',
-        'Среда',
-        'Четверг',
-        'Пятница',
-        'Суббота'
-    ],
     hourForm = ['час', 'часа', 'часов'],
     secondForm = ['секунда', 'секунды', 'секунд'],
 
     getFullDate1 = function() {
         const now = new Date();
-        return 'Сегодня ' + dayRu[now.getDay()] + ', ' + now.getDate() + ' ' + 
-            monthRu[now.getMonth()-1] + ' ' + now.getFullYear() + ' года, ' + 
+
+        return 'Сегодня ' + capitalizeFirstLetter(now.toLocaleString('ru', {weekday: 'long'})) + ', ' + 
+            now.toLocaleString('ru', {day: 'numeric', month: 'long'}) + ' ' + now.getFullYear() + ' года, ' + 
             now.getHours() + ' ' + declOfNum(now.getHours(), hourForm) + ' ' + 
             now.getMinutes() + ' минут ' + now.getSeconds() + ' ' + 
             declOfNum(now.getSeconds(), secondForm);
     },
     getFullDate2 = function() {
         const now = new Date();
+        console.log();
         return getNumberByString(now.getDate()) + '.' + 
             getNumberByString(now.getMonth()+1) + '.' + 
             getNumberByString(now.getFullYear()) + ' - ' +
             getNumberByString(now.getHours()) + ':' +
             getNumberByString(now.getMinutes()) + ':' +
             getNumberByString(now.getSeconds());
+
+        // Вариант 2. Без использования ф-ии getNumberByString
+        // return now.toLocaleString('ru' , {
+        //     day: 'numeric',
+        //     month: 'numeric',
+        //     year: 'numeric'
+        // }) + ' - ' + now.toLocaleString('ru', {
+        //     hour: 'numeric',
+        //     minute: 'numeric',
+        //     second: 'numeric'
+        // });
     },
     displayDate = function() {
         const
