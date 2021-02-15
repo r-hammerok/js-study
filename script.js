@@ -1,31 +1,20 @@
 'use strict';
 
 const 
-    getHourByString = function(hour) {
-        hour = hour % 100;
-        const suffix = hour % 10;
-        if (suffix === 1 && hour !== 11) {
-            return 'час';
-        }
-        if (suffix >= 2 && suffix <= 4 && (hour <= 9 || hour >= 22)) {
-            return 'часа';
-        }
-        return 'часов';
-    },
-    getSecondByString = function(second) {
-        second = second % 100;
-        const suffix = second % 10;
-        if (suffix === 1 && second !== 11) {
-            return 'секунда';
-        }
-        if (suffix >= 2 && suffix <= 4 && (second <=9 || second >= 22)) {
-            return 'секунды';
-        }
-        return 'секунд';
-    },
     getNumberByString = function(n) {
-        return n < 10 ? '0' + String(n) : String(n);
-    }
+        return n < 10 ? `0${n}` : `${n}`;
+    },
+    declOfNum = function(n, textForms) {
+        n = Math.abs(n) % 100;
+        const suffix = n % 10;
+        if (suffix === 1 && n !== 11) {
+            return textForms[0];
+        }
+        if (suffix >= 2 && suffix <= 4 && (n <=9 || n >= 22)) {
+            return textForms[1];
+        }
+        return textForms[2];
+    };
 
 const 
     monthRu = [
@@ -51,13 +40,16 @@ const
         'Пятница',
         'Суббота'
     ],
+    hourForm = ['час', 'часа', 'часов'],
+    secondForm = ['секунда', 'секунды', 'секунд'],
+
     getFullDate1 = function() {
         const now = new Date();
         return 'Сегодня ' + dayRu[now.getDay()] + ', ' + now.getDate() + ' ' + 
             monthRu[now.getMonth()-1] + ' ' + now.getFullYear() + ' года, ' + 
-            now.getHours() + ' ' + getHourByString(now.getHours()) + ' ' + 
+            now.getHours() + ' ' + declOfNum(now.getHours(), hourForm) + ' ' + 
             now.getMinutes() + ' минут ' + now.getSeconds() + ' ' + 
-            getSecondByString(now.getSeconds());
+            declOfNum(now.getSeconds(), secondForm);
     },
     getFullDate2 = function() {
         const now = new Date();
