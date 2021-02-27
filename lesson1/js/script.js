@@ -71,16 +71,10 @@ let
         }
       },
       onlyText: function(e) {
-        if (e.charCode !== 32 && e.charCode !== 44 && e.charCode !== 46 && 
-              e.charCode !== 1025 && e.charCode !== 1105 && 
-                 (e.charCode < 1040 || e.charCode > 1103)) {
-          e.preventDefault();
-        }
+        if (!e.key.replace(/[^а-яё\s\.,\-:?!;]/i, '')) { e.preventDefault(); }
       },
       onlyNumber: function(e) {
-        if (e.charCode < 48 || e.charCode > 57 ) {
-          e.preventDefault();
-        }
+        if (!e.key.replace(/[\D]/, '')) { e.preventDefault(); }
       },
       showResult: function() {
         periodSelect.addEventListener('change', function() 
@@ -100,6 +94,8 @@ let
         let cloneExpensesItem = expensesItems[0].cloneNode(true);
         cloneExpensesItem.querySelector('.expenses-title').value = '';
         cloneExpensesItem.querySelector('.expenses-amount').value = '';
+        cloneExpensesItem.querySelector('.expenses-title').addEventListener('keypress', appData.onlyText);
+        cloneExpensesItem.querySelector('.expenses-amount').addEventListener('keypress', appData.onlyNumber);
         expensesItems[0].parentNode.insertBefore(cloneExpensesItem, btnAddExpenses);
         expensesItems = document.querySelectorAll('.expenses-items');
         if (expensesItems.length === 3) {
@@ -121,6 +117,8 @@ let
         const cloneIncomeItem = incomeItems[0].cloneNode(true);
         cloneIncomeItem.querySelector('.income-title').value = '';
         cloneIncomeItem.querySelector('.income-amount').value = '';
+        cloneIncomeItem.querySelector('.income-title').addEventListener('keypress', appData.onlyText);
+        cloneIncomeItem.querySelector('.income-amount').addEventListener('keypress', appData.onlyNumber);
         btnAddIncome.insertAdjacentElement('beforeBegin', cloneIncomeItem);
         incomeItems = document.querySelectorAll('.income-items');
         if (incomeItems.length === 3) {
